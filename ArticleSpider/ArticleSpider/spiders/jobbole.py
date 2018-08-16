@@ -10,7 +10,8 @@ class JobboleSpider(scrapy.Spider):
     def parse(self, response):
         title = response.xpath("//div[@class='entry-header']/h1/text()").extract()[0]
         time = response.xpath("//p[@class='entry-meta-hide-on-mobile']/text()").extract()[0].replace('·', '').strip()
-        category = response.xpath("//p[@class='entry-meta-hide-on-mobile']//a/text()").extract()
+        tag_list = response.xpath("//p[@class='entry-meta-hide-on-mobile']//a/text()").extract()
+        tag_list = [element for element in tag_list if not element.strip().endswith("评论")]
         # praise = response.xpath("//h10[@id='114273votetotal']/text()").extract()[0]
 
         praise_nums = response.xpath("//span[contains(@class,'')]/h10/text()").extract()[0]
